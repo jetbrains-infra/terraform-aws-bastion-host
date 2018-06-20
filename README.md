@@ -5,10 +5,10 @@ Creates bastion host with allowed SSH access from specific IPs.
 Features:
 * Allow access from specific CIDRs (default is `0.0.0.0/0`)
 
-Outputs:
-* Security group ID to allow access from bastion host to other nodes.
+## Outputs
+* `security_group` - security group ID to allow access from bastion host to other nodes.
 
-# Usage
+## Usage
 
 ```
 module "bastion" {
