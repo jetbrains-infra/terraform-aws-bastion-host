@@ -1,37 +1,27 @@
 data "aws_subnet" "public" {
   id = "${var.subnet_id}"
 }
-resource "aws_security_group" "from_bastion" {
-  name = "Access for bastion host"
-  description = "Allow SSH access from bastion host"
-  vpc_id = "${data.aws_subnet.public.vpc_id}"
 
-  # SSH acces
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.to_bastion.id}"]
-  }
-}
-resource "aws_security_group" "to_bastion" {
-  name = "Access to bastion host"
+resource "aws_security_group" "bastion" {
+  name        = "Bastion"
   description = "Allow SSH access to bastion host and outbound internet access"
-  vpc_id = "${data.aws_subnet.public.vpc_id}"
+  vpc_id      = "${data.aws_subnet.public.vpc_id}"
+}
 
-  # SSH acces
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["${split(",", var.allowed_hosts)}"]
-  }
+resource "aws_security_group_rule" "ssh" {
+  protocol          = "TCP"
+  from_port         = 22
+  to_port           = 22
+  type              = "ingress"
+  cidr_blocks       = ["${var.allowed_hosts}"]
+  security_group_id = "${aws_security_group.bastion.id}"
+}
 
-  # outbound internet access
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_security_group_rule" "internet" {
+  protocol          = "-1"
+  from_port         = 0
+  to_port           = 0
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.bastion.id}"
 }
