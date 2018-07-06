@@ -14,7 +14,7 @@ Features:
 module "bastion" {
   source        = "github.com/jetbrains-infra/terraform-aws-bastion-host"  
   subnet_id     = "${aws_subnet.public.id}"
-  allowed_hosts = "11.22.33.44/32,99.88.77.66./24" // comma-separated list CIDRs
+  allowed_hosts = ["11.22.33.44/32","99.88.77.66./24"]
 }
 
 resource "aws_instance" "web" {
