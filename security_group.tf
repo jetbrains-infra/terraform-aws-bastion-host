@@ -27,9 +27,9 @@ resource "aws_security_group_rule" "internet" {
 }
 
 resource "aws_security_group_rule" "intranet" {
-  protocol          = "TCP"
-  from_port         = 22
-  to_port           = 22
+  protocol          = "-1"
+  from_port         = 0
+  to_port           = 0
   type              = "egress"
   cidr_blocks       = ["${var.internal_networks}"]
   security_group_id = "${aws_security_group.bastion.id}"
