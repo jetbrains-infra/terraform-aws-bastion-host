@@ -23,5 +23,6 @@ variable "disk_size" {
 }
 
 variable "internal_networks" {
+  type        = "list"
   description = "Internal network CIDR blocks."
 }
