@@ -1,5 +1,11 @@
-variable "subnet_id" {}
-variable "ssh_key" {}
+variable "subnet_id" {
+  description = "The VPC Subnet ID to launch in."
+}
+
+variable "ssh_key" {
+  description = "The key name of the Key Pair to use for the instance."
+}
+
 variable "allowed_hosts" {
   description = "CIDR blocks of trusted networks"
   type        = "list"
