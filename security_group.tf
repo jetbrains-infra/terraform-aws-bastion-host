@@ -1,11 +1,11 @@
-data "aws_subnet" "public" {
-  id = "${var.subnet_id}"
-}
-
 resource "aws_security_group" "bastion" {
-  name        = "Bastion"
+  name        = "Bastion host of ${local.project}"
   description = "Allow SSH access to bastion host and outbound internet access"
-  vpc_id      = "${data.aws_subnet.public.vpc_id}"
+  vpc_id      = "${local.vpc_id}"
+
+  tags {
+    Project = "${local.project}"
+  }
 }
 
 resource "aws_security_group_rule" "ssh" {
