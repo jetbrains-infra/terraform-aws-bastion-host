@@ -12,7 +12,7 @@ variable "ssh_key" {
 
 variable "allowed_hosts" {
   description = "CIDR blocks of trusted networks"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
@@ -23,11 +23,11 @@ variable "instance_type" {
 
 variable "disk_size" {
   description = "The size of the root volume in gigabytes."
-  default = 10
+  default     = 10
 }
 
 variable "internal_networks" {
-  type        = "list"
+  type        = list(string)
   description = "Internal network CIDR blocks."
 }
 
@@ -43,15 +43,16 @@ data "aws_ami" "centos" {
 }
 
 data "aws_subnet" "public" {
-  id = "${local.subnet_id}"
+  id = local.subnet_id
 }
 
 locals {
-  vpc_id        = "${data.aws_subnet.public.vpc_id}"
-  project       = "${var.project}"
-  ami_id        = "${data.aws_ami.centos.id}"
-  disk_size     = "${var.disk_size}"
-  subnet_id     = "${var.subnet_id}"
-  ssh_key       = "${var.ssh_key}"
-  instance_type = "${var.instance_type}"
+  vpc_id        = data.aws_subnet.public.vpc_id
+  project       = var.project
+  ami_id        = data.aws_ami.centos.id
+  disk_size     = var.disk_size
+  subnet_id     = var.subnet_id
+  ssh_key       = var.ssh_key
+  instance_type = var.instance_type
 }
+
