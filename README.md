@@ -17,8 +17,9 @@ module "bastion" {
   subnet_id         = aws_subnet.public.id
   ssh_key           = "ssh_key_name"
   internal_networks = ["10.0.10.0/24", module.vpc.subnet_internal1_cidr_block]
+  project           = "myProject"
 }
-``` 
+```
 
 All params
 ```
@@ -30,6 +31,7 @@ module "bastion" {
   internal_networks = ["10.0.10.0/24", module.vpc.subnet_internal1_cidr_block]
   disk_size         = 10
   instance_type     = "t2.micro"
+  project           = "myProject"
 }
 ```
 
@@ -39,6 +41,7 @@ module "bastion" {
 * `ssh_key` - The key name of the Key Pair to use for the instance.
 * `allowed_hosts` - CIDR blocks of trusted networks.
 * `internal_networks` - Internal network CIDR blocks.
+* `project` - The value for tag *project*.
 
 
 ### Optional params with default values
@@ -49,5 +52,5 @@ module "bastion" {
 ## Outputs
 
 * `public_ip` - bastion public IP
-* `internal_ip` - bastion internal IP
+* `private_ip` - bastion internal IP
 * `instance_id` - EC2 instance ID
