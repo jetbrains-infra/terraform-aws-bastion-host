@@ -11,7 +11,7 @@ Terraform >=0.12 required. You can use release [v0.3.1](https://github.com/jetbr
 ## Usage
 
 Default
-```
+```hcl
 module "bastion" {
   source            = "github.com/jetbrains-infra/terraform-aws-bastion-host"
   subnet_id         = aws_subnet.public.id
@@ -22,7 +22,7 @@ module "bastion" {
 ```
 
 All params
-```
+```hcl
 module "bastion" {
   source            = "github.com/jetbrains-infra/terraform-aws-bastion-host"  
   subnet_id         = aws_subnet.public.id
